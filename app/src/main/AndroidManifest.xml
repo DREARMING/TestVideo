@@ -18,7 +18,9 @@
             android:hardwareAccelerated="true">
 
         </activity>
-        <activity android:name=".ExoPlayerActivity">
+        <activity android:name=".ExoPlayerActivity"
+            android:hardwareAccelerated="true"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

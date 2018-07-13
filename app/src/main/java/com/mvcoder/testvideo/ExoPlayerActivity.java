@@ -78,7 +78,8 @@ public class ExoPlayerActivity extends AppCompatActivity implements PlaybackPrep
     private SimpleExoPlayer player;
     private MyTextureView textureView;
 
-    private final String videoFileUrl = "http://192.168.3.83:8080/test2.mp4";
+    private final String rtmpTestUrl = "rtmp://live.hkstv.hk.lxdns.com/live/hks";
+    private final String videoFileUrl = "http://192.168.191.1:8080/test2.mp4";
     private final String TAG = ExoPlayer.class.getSimpleName();
 
 
