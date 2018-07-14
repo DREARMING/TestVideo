@@ -8,6 +8,8 @@ import android.widget.FrameLayout;
 
 import com.mvcoder.videosegment.bean.Position;
 import com.mvcoder.videosegment.bean.VideoConfiguration;
+import com.mvcoder.videosegment.js.VideoJsProtoObj;
+import com.mvcoder.videosegment.utils.Constants;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -56,8 +58,14 @@ public class VideoContainer extends FrameLayout {
         initView(context);
     }
 
-    private void initView(Context context){
+    private void initView(Context context) {
         this.context = context;
+    }
+
+    private VideoJsProtoObj jsBridge;
+
+    public void setJsBridge(VideoJsProtoObj bridge) {
+        this.jsBridge = bridge;
     }
 
     /*public void addVideoComponents(List<VideoParams> paramList) {
@@ -122,6 +130,19 @@ public class VideoContainer extends FrameLayout {
             addView(videoComponent);
             videoMap.put(conf.getVideoId(), videoComponent);
         }
+        videoComponent.setInfoListener(new SegmentVideoComponent.VideoInfoListener() {
+            @Override
+            public void onPrepared(long duration) {
+                if (jsBridge != null)
+                    jsBridge.sendMsgToWeb(Constants.JSMethod.ONPREPARED_MSG, duration + "");
+            }
+
+            @Override
+            public void onError(String msg) {
+                if (jsBridge != null)
+                    jsBridge.sendMsgToWeb(Constants.JSMethod.ERROR_MSG, msg);
+            }
+        });
         //配置音视频控件
         videoComponent.apply(conf);
     }
@@ -176,9 +197,9 @@ public class VideoContainer extends FrameLayout {
 */
 
 
-    public void switchSegment(String videoId, int index, String segmentTitle){
+    public void switchSegment(String videoId, int index, String segmentTitle) {
         SegmentVideoComponent component = videoMap.get(videoId);
-        if(component != null){
+        if (component != null) {
             component.switchSegment(index, segmentTitle);
         }
     }
@@ -191,7 +212,9 @@ public class VideoContainer extends FrameLayout {
     @Override
     protected void onDetachedFromWindow() {
         super.onDetachedFromWindow();
+        jsBridge = null;
         videoMap.clear();
+
     }
 
 

@@ -79,7 +79,7 @@ public class VideoJsProtoObj implements IVideoJsProto {
     public void config(String configJsonStr) {
         VideoConfiguration info = gson.fromJson(configJsonStr, VideoConfiguration.class);
         if (info == null) {
-            sendMsgToWeb(Constants.JSMethod.printMsg, "json配置信息错误");
+            sendMsgToWeb(Constants.JSMethod.PRINT_MSG, "json配置信息错误");
             return;
         }
         mHandler.removeMessages(CONFIG_VIDEO);
@@ -91,7 +91,7 @@ public class VideoJsProtoObj implements IVideoJsProto {
     public void switchSegment(String str) {
         SwitchItem item = gson.fromJson(str, SwitchItem.class);
         if (item == null) {
-            sendMsgToWeb(Constants.JSMethod.printMsg, "切换片段函数参数有误，请检查字段");
+            sendMsgToWeb(Constants.JSMethod.PRINT_MSG, "切换片段函数参数有误，请检查字段");
             return;
         }
         mHandler.removeMessages(SWITCH_SEGMENT);
@@ -128,7 +128,7 @@ public class VideoJsProtoObj implements IVideoJsProto {
      * @param method js方法名
      * @param msg    要传递给js方法的参数
      */
-    private void sendMsgToWeb(String method, String msg) {
+    public void sendMsgToWeb(String method, String msg) {
         StringBuilder builder = new StringBuilder("javascript:");
         builder.append(method);
         builder.append("('");

@@ -97,6 +97,8 @@ public class ExoPlayerActivity extends AppCompatActivity implements PlaybackPrep
     private boolean repeatMode = false;
     private int repeatCount = 1;
 
+    MediaSource videoSource;
+
     private boolean touchEnd = false;
 
     private int curNode = 0;
@@ -127,7 +129,7 @@ public class ExoPlayerActivity extends AppCompatActivity implements PlaybackPrep
                 Util.getUserAgent(this,
                         TestVideoApplication.class.getName()), bandwidthMeter1);
         // This is the MediaSource representing the media to be played.
-        MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
+        videoSource = new ExtractorMediaSource.Factory(dataSourceFactory)
                 .createMediaSource(mp4VideoUri);
 
         player.setPlayWhenReady(false);
@@ -137,7 +139,8 @@ public class ExoPlayerActivity extends AppCompatActivity implements PlaybackPrep
         player.addVideoListener(new VideoListener() {
             @Override
             public void onVideoSizeChanged(int width, int height, int unappliedRotationDegrees, float pixelWidthHeightRatio) {
-
+                Log.d(TAG, "onVideoSizeChanged : width : " + width +  " , height : " + height +
+                        " , unappliedRotationDegrees : " + unappliedRotationDegrees + " , pixelWidthHeightRatio : " + pixelWidthHeightRatio);
             }
 
             @Override
@@ -287,6 +290,12 @@ public class ExoPlayerActivity extends AppCompatActivity implements PlaybackPrep
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.playBt:
+                if(player.getPlaybackState() == Player.STATE_IDLE){
+                    player.setPlayWhenReady(false);
+                    player.prepare(videoSource);
+                    player.seekTo(startMills);
+                    return;
+                }
                 if (touchEnd) {
                     player.seekTo(startMills);
                     touchEnd = false;
@@ -352,6 +361,12 @@ public class ExoPlayerActivity extends AppCompatActivity implements PlaybackPrep
         @Override
         public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
             super.onPlayerStateChanged(playWhenReady, playbackState);
+            /**
+             * 1 - ideal 没有音视频时候的状态,比如说播放失败后就会进入此状态
+             * 2 - buffer  缓冲状态
+             * 3 - ready   准备好的状态，onPlayWhenReady  true时，直接播放，反之暂停
+             * 4 - end  视频播放完毕
+             */
             Log.d(TAG, "onPlayerStateChange : " + " playWhenReady : " + playWhenReady + " , playbackState : " + playbackState);
         }
 
@@ -364,15 +379,23 @@ public class ExoPlayerActivity extends AppCompatActivity implements PlaybackPrep
         @Override
         public void onPlayerError(ExoPlaybackException error) {
             super.onPlayerError(error);
-            if(error.getSourceException() != null){
+            String errMsg = "unknow error";
+            if (error.getSourceException() != null) {
+                errMsg = "播放器不能此视频源";
                 ToastUtils.showShort("播放器不能此视频源");
+            } else if (error.getRendererException() != null) {
+                errMsg = "渲染失败,可能因为手机不支持硬件加速所致";
+
+            }else if(error.getUnexpectedException().getMessage() != null){
+                errMsg = error.getMessage();
             }
-            Log.d(TAG, "Error : " + error.getMessage());
+            Log.d(TAG, "Error : " + errMsg);
         }
 
         @Override
         public void onLoadingChanged(boolean isLoading) {
             super.onLoadingChanged(isLoading);
+            Log.d(TAG, "onLoadingChanged : " + isLoading);
         }
 
     }
@@ -410,6 +433,7 @@ public class ExoPlayerActivity extends AppCompatActivity implements PlaybackPrep
 
         @Override
         public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width, int height) {
+            Log.d(TAG, "onSurfaceTextureSizeChanged : width : " + width + " , height : " + height);
             delegateListener.onSurfaceTextureAvailable(surface, width, height);
         }
 
