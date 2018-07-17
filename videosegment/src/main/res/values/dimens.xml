@@ -1,0 +1,7 @@
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+
+    <dimen name="shape_circle_radius">16dp</dimen>
+    <dimen name="shape_circle_width">32dp</dimen>
+
+</resources>

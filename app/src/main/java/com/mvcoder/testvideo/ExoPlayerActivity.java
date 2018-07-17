@@ -119,7 +119,6 @@ public class ExoPlayerActivity extends AppCompatActivity implements PlaybackPrep
 
 
     private void prepardVideo() {
-
         Uri mp4VideoUri = Uri.parse(videoFileUrl);
 
         // Measures bandwidth during playback. Can be null if not required.

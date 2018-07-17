@@ -19,13 +19,15 @@
         <activity
             android:name=".ExoPlayerActivity"
             android:hardwareAccelerated="true">
+
+        </activity>
+        <activity android:name=".VideoControllerActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".VideoControllerActivity"></activity>
     </application>
 
 </manifest>

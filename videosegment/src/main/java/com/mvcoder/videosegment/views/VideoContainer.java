@@ -142,6 +142,13 @@ public class VideoContainer extends FrameLayout {
                 if (jsBridge != null)
                     jsBridge.sendMsgToWeb(Constants.JSMethod.ERROR_MSG, msg);
             }
+
+            @Override
+            public void onBackPressed() {
+                if(jsBridge != null){
+                    jsBridge.onBackPressed();
+                }
+            }
         });
         //配置音视频控件
         videoComponent.apply(conf);

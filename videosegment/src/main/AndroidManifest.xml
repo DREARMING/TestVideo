@@ -1,2 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.mvcoder.videosegment" />
+    package="com.mvcoder.videosegment">
+
+    <application>
+        <activity android:name=".TestUIActivity"></activity>
+    </application>
+
+</manifest>

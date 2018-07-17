@@ -5,8 +5,10 @@ import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.NonNull;
+import android.view.ViewGroup;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebView;
+import android.widget.FrameLayout;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -31,6 +33,7 @@ public class VideoJsProtoObj implements IVideoJsProto {
      * 这是视频控件的容器,用于管理在容器上所有音视频
      */
     private VideoContainer videoContainer;
+    private FrameLayout overlay;
     private WebView webView;
     private Context mContext;
     private static boolean isInit = false;
@@ -57,17 +60,22 @@ public class VideoJsProtoObj implements IVideoJsProto {
         }
     };
 
-    private VideoJsProtoObj(@NonNull WebView webView, @NonNull VideoContainer videoContainer) {
-        this.videoContainer = videoContainer;
+    private VideoJsProtoObj(@NonNull WebView webView, @NonNull FrameLayout overlay) {
+        this.overlay = overlay;
         this.webView = webView;
         mContext = webView.getContext();
+
+        videoContainer = new VideoContainer(mContext);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        videoContainer.setLayoutParams(params);
+        overlay.addView(videoContainer);
     }
 
-    public static VideoJsProtoObj getInstance(WebView context, VideoContainer videoContainer) {
+    public static VideoJsProtoObj getInstance(WebView context, FrameLayout overlay) {
         if (instance == null) {
             synchronized (VideoJsProtoObj.class) {
                 if (instance == null) {
-                    instance = new VideoJsProtoObj(context, videoContainer);
+                    instance = new VideoJsProtoObj(context, overlay);
                 }
             }
         }
@@ -108,6 +116,12 @@ public class VideoJsProtoObj implements IVideoJsProto {
     @Override
     public void videoDuration(long duration) {
 
+    }
+
+    public void onBackPressed(){
+        if(webView.canGoBack()){
+            webView.goBack();
+        }
     }
 
     private void addSegmentVideoComponent(VideoConfiguration info) {

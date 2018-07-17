@@ -5,8 +5,8 @@
 
     <com.google.android.exoplayer2.ui.PlayerView
         android:id="@+id/playerView"
-        android:layout_width="216dp"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="216dp"
         app:show_buffering="true"
         app:use_controller="false"
         >

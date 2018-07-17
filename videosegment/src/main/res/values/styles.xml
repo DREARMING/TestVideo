@@ -1,0 +1,8 @@
+<resources>
+
+    <style name="segment_circle_bt" parent="Widget.AppCompat.ImageButton">
+        <item name="background">@drawable/shape_circle_transparent</item>
+        <item name="android:padding">2dp</item>
+    </style>
+
+</resources>
