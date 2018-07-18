@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".TestBubbleSbActivity">
+
+
+    <com.xw.repo.BubbleSeekBar
+        android:id="@+id/bsb"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        app:bsb_min="0.1"
+        app:bsb_max="3.0"
+        app:bsb_progress="1.0"
+        app:bsb_show_thumb_text="true"
+        app:bsb_track_color="@android:color/white"
+        app:bsb_second_track_color="@color/colorPrimary"
+        />
+
+</FrameLayout>

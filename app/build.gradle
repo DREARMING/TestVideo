@@ -34,4 +34,5 @@ dependencies {
     implementation 'com.github.zzz40500:android-shapeLoadingView:1.0.3.2'
     implementation 'com.afollestad.material-dialogs:core:0.9.4.5'
     implementation project(':videosegment')
+    implementation 'com.xw.repo:bubbleseekbar:3.16-lite'
 }

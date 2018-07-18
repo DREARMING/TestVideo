@@ -73,6 +73,7 @@ public class SegmentVideoComponent extends FrameLayout {
     private VideoInfoListener infoListener;
 
     private boolean userCustomController = true;
+    private boolean initTimeline = false;
 
     private SegmentPlayController playController;
     private TextView tvError;
@@ -91,7 +92,18 @@ public class SegmentVideoComponent extends FrameLayout {
     }
 
     public void setSegementMode(boolean segmentMode) {
-        this.segmentMode = segmentMode;
+        if(this.segmentMode != segmentMode) {
+            this.segmentMode = segmentMode;
+            if(playController != null){
+                playController.setSegmentModeState(segmentMode);
+            }
+            if(segmentMode && !initTimeline && hasPrepared){
+                segmentVideo();
+            }
+            if(infoListener != null){
+                infoListener.onSegmentModeStateChange(segmentMode);
+            }
+        }
     }
 
 
@@ -122,9 +134,9 @@ public class SegmentVideoComponent extends FrameLayout {
 
     public void apply(VideoConfiguration config){
         this.segmentMills = config.getSegmentMills();
-        this.segmentMode = config.isSegmentMode();
         this.repeatMode = config.isLoopSegment();
         setAutoPlaySegment(config.isAutoPlaySegment());
+        setSegementMode(config.isSegmentMode());
         this.showTitle = config.isShowTitle();
         prepardVideo(config.getVideoUrl());
     }
@@ -289,14 +301,16 @@ public class SegmentVideoComponent extends FrameLayout {
                 }
                 if (!hasPrepared) {
                     hasPrepared = true;
-                    onPreparedFinish();
-                    log("segment video finish");
+                    if(segmentMode) {
+                        segmentVideo();
+                        log("segment video finish");
+                    }
                 }
             }
         });
     }
 
-    private void onPreparedFinish() {
+    private void segmentVideo() {
         if (segmentList != null) segmentList.clear();
         initTimeLine();
         if (segmentList != null && segmentList.size() <= 0) {
@@ -307,7 +321,7 @@ public class SegmentVideoComponent extends FrameLayout {
         //curSegment = segmentList.get(0);
 
         if(infoListener != null){
-            infoListener.onPrepared(player.getDuration());
+            infoListener.onSegmentFinish(player.getDuration());
         }
     }
 
@@ -344,6 +358,7 @@ public class SegmentVideoComponent extends FrameLayout {
             segement.setTimeline(segement.getStartTime() + "~" + segement.getEndTime());
             segmentList.add(segement);
         }
+        initTimeline = true;
     }
 
     private void log(String msg) {
@@ -353,7 +368,8 @@ public class SegmentVideoComponent extends FrameLayout {
     }
 
     public interface VideoInfoListener{
-        void onPrepared(long duration);
+        void onSegmentFinish(long duration);
+        void onSegmentModeStateChange(boolean open);
         void onError(String msg);
         void onBackPressed();
     }

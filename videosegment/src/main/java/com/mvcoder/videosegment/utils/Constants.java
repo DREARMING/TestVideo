@@ -6,6 +6,7 @@ public class Constants {
         public static final String PRINT_MSG = "segment_print";
         public static final String ONPREPARED_MSG = "segment_prepared";
         public static final String ERROR_MSG = "segment_error";
+        public static final String SEGMENT_MODE_MSG = "segmentModeChanged";
     }
 
 }

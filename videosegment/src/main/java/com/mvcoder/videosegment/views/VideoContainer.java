@@ -132,9 +132,16 @@ public class VideoContainer extends FrameLayout {
         }
         videoComponent.setInfoListener(new SegmentVideoComponent.VideoInfoListener() {
             @Override
-            public void onPrepared(long duration) {
+            public void onSegmentFinish(long duration) {
                 if (jsBridge != null)
                     jsBridge.sendMsgToWeb(Constants.JSMethod.ONPREPARED_MSG, duration + "");
+            }
+
+            @Override
+            public void onSegmentModeStateChange(boolean open) {
+                if(jsBridge != null){
+                    jsBridge.sendMsgToWeb(Constants.JSMethod.SEGMENT_MODE_MSG, open+"");
+                }
             }
 
             @Override

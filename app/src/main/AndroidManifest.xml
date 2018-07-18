@@ -18,16 +18,17 @@
             android:hardwareAccelerated="true" />
         <activity
             android:name=".ExoPlayerActivity"
-            android:hardwareAccelerated="true"></activity>
-        <activity android:name=".VideoControllerActivity">
-
-        </activity>
+            android:hardwareAccelerated="true" />
+        <activity android:name=".VideoControllerActivity"></activity>
         <activity android:name=".TestWebviewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".TestBubbleSbActivity">
+
         </activity>
     </application>
 

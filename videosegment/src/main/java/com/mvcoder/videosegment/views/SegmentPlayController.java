@@ -27,13 +27,16 @@ public class SegmentPlayController extends FrameLayout implements View.OnClickLi
 
     private Context mContext;
     private RadioGroup autoPlayRG;
+    private RadioGroup segmentModeRG;
     private AppCompatSeekBar playSpeedSB;
+    private TextView tvSpeed;
     private ImageButton btBack;
     private ImageButton btSetting;
     private ImageButton btNextNode;
     private ImageButton btLastNode;
     private ImageButton btPlay;
     private LinearLayout menuLayout;
+    private LinearLayout segmentTipLayout;
 
     private TextView tvSegmentIndex;
     private TextView tvSegmentDuration;
@@ -51,6 +54,7 @@ public class SegmentPlayController extends FrameLayout implements View.OnClickLi
 
     private boolean autoPlay = false;
     private boolean menuOpen = true;
+    private boolean segmentMode = true;
 
     public SegmentPlayController(@NonNull Context context) {
         this(context, null);
@@ -83,6 +87,17 @@ public class SegmentPlayController extends FrameLayout implements View.OnClickLi
         int checkId = autoPlay ? R.id.rb_autoplay_open : R.id.rb_autoplay_close;
         if(autoPlayRG.getCheckedRadioButtonId() != checkId)
             autoPlayRG.check(checkId);
+    }
+
+    public void setSegmentModeState(boolean open){
+        if(open != segmentMode) {
+            segmentMode = open;
+            int checkId = open ? R.id.rb_segment_open : R.id.rb_segment_close;
+            if (segmentModeRG.getCheckedRadioButtonId() != checkId) {
+                segmentModeRG.check(checkId);
+            }
+            segmentTipLayout.setVisibility(open ? VISIBLE : INVISIBLE);
+        }
     }
 
     private int menuLayoutX = -1;
@@ -131,14 +146,17 @@ public class SegmentPlayController extends FrameLayout implements View.OnClickLi
         tvSegmentIndex = findViewById(R.id.tv_segment_index);
 
         autoPlayRG = findViewById(R.id.rg_autoplay);
+        segmentModeRG = findViewById(R.id.rg_segment_mode);
         playSpeedSB = findViewById(R.id.sb_playpeed);
-
+        tvSpeed = findViewById(R.id.tv_speed);
         btBack = findViewById(R.id.ib_back);
         btLastNode = findViewById(R.id.ib_last_segment);
         btNextNode = findViewById(R.id.ib_next_segment);
         btPlay = findViewById(R.id.ib_play);
         btSetting = findViewById(R.id.ib_setting);
         menuLayout = findViewById(R.id.ll_menuLayout);
+
+        segmentTipLayout = findViewById(R.id.ll_segment_tips);
 
         btBack.setOnClickListener(this);
         btLastNode.setOnClickListener(this);
@@ -159,10 +177,19 @@ public class SegmentPlayController extends FrameLayout implements View.OnClickLi
             }
         });
 
+        segmentModeRG.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                segmentMode = checkedId == R.id.rb_segment_open;
+                segmentTipLayout.setVisibility(segmentMode?VISIBLE:INVISIBLE);
+                setSegmentMode(segmentMode);
+            }
+        });
+
         playSpeedSB.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+                tvSpeed.setText("" + (float) progress / 10);
             }
 
             @Override
@@ -177,10 +204,12 @@ public class SegmentPlayController extends FrameLayout implements View.OnClickLi
             }
         });
 
+        float translationX = getResources().getDisplayMetrics().density * 180;
+
         showAnim = ObjectAnimator.ofFloat(menuLayout,"translationX",menuLayout.getTranslationX(), 0.0f).setDuration(DEFAULT_ANIMATION_MS);
         showAnim.addUpdateListener(this);
 
-        hideAnim = ObjectAnimator.ofFloat(menuLayout, "translationX", 0.0f,menuLayout.getTranslationX()).setDuration(DEFAULT_ANIMATION_MS);
+        hideAnim = ObjectAnimator.ofFloat(menuLayout, "translationX", 0.0f, menuLayout.getTranslationX()).setDuration(DEFAULT_ANIMATION_MS);
         hideAnim.addUpdateListener(this);
 
         playSpeedSB.setProgress(currentSpeed);
@@ -245,6 +274,12 @@ public class SegmentPlayController extends FrameLayout implements View.OnClickLi
     private void setPlayerSpeed(float speed){
         if(player != null){
             player.setPlaybackParameters(new PlaybackParameters(speed));
+        }
+    }
+
+    private void setSegmentMode(boolean open){
+        if(component != null){
+            component.setSegementMode(open);
         }
     }
 

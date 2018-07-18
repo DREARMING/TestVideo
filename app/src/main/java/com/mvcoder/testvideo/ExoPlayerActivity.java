@@ -185,7 +185,7 @@ public class ExoPlayerActivity extends AppCompatActivity implements PlaybackPrep
 
     @Override
     public void preparePlayback() {
-        Log.d(TAG, "onPrepared");
+        Log.d(TAG, "onSegmentFinish");
     }
 
     private void initSegement() {
