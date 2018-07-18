@@ -15,13 +15,14 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:hardwareAccelerated="true"></activity>
+            android:hardwareAccelerated="true" />
         <activity
             android:name=".ExoPlayerActivity"
-            android:hardwareAccelerated="true">
+            android:hardwareAccelerated="true"></activity>
+        <activity android:name=".VideoControllerActivity">
 
         </activity>
-        <activity android:name=".VideoControllerActivity">
+        <activity android:name=".TestWebviewActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

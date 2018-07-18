@@ -79,6 +79,12 @@ public class SegmentPlayController extends FrameLayout implements View.OnClickLi
         tvSegmentDuration.setText("时间段: " + duration);
     }
 
+    public void setAutoPlay(boolean autoPlay){
+        int checkId = autoPlay ? R.id.rb_autoplay_open : R.id.rb_autoplay_close;
+        if(autoPlayRG.getCheckedRadioButtonId() != checkId)
+            autoPlayRG.check(checkId);
+    }
+
     private int menuLayoutX = -1;
 
     @Override

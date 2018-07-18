@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".TestWebviewActivity">
+
+    <FrameLayout
+        android:id="@+id/fl_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <FrameLayout
+            android:id="@+id/fl_container_webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/fl_video_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </FrameLayout>
+
+        <!--<com.creator.tybrowser.views.ScroolDelegateView
+            android:id="@+id/scroolView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.creator.tybrowser.views.VideoContainer2
+                android:id="@+id/view_video_container"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </com.creator.tybrowser.views.VideoContainer2>
+
+        </com.creator.tybrowser.views.ScroolDelegateView>-->
+
+        <!--<com.creator.tybrowser.views.VideoContainer
+            android:id="@+id/view_video_container"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+
+        </com.creator.tybrowser.views.VideoContainer>-->
+
+        <FrameLayout
+            android:id="@+id/load_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            android:visibility="gone">
+
+            <com.mingle.widget.LoadingView
+                android:id="@+id/progressBar"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </com.mingle.widget.LoadingView>
+
+            <!-- <ProgressBar
+                 android:id="@+id/progressBar"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_gravity="center"
+                 />-->
+
+        </FrameLayout>
+
+        <RelativeLayout
+            android:id="@+id/errorPage"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:background="@android:color/white"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/errorPage_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:src="@mipmap/main_load_failure" />
+
+            <Button
+                android:id="@+id/reloadBt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignLeft="@id/errorPage_text"
+                android:layout_alignRight="@id/errorPage_text"
+                android:layout_below="@id/errorPage_text"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/main_bt_reload_bg"
+                android:layout_margin="10dp"
+                android:textColor="@android:color/white"
+                android:text="刷新加载" />
+
+        </RelativeLayout>
+
+
+    </FrameLayout>
+
+</LinearLayout>

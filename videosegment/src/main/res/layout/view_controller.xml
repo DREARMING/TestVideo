@@ -88,10 +88,10 @@
             />
 
         <ImageButton
-            android:id="@+id/ib_next_segment"
+            android:id="@+id/ib_last_segment"
             android:layout_width="@dimen/shape_circle_width"
             android:layout_height="@dimen/shape_circle_width"
-            android:src="@drawable/exo_icon_next"
+            android:src="@drawable/exo_icon_previous"
             android:padding="2dp"
             android:background="@drawable/shape_circle_transparent"
             />
@@ -103,10 +103,10 @@
             />
 
         <ImageButton
-            android:id="@+id/ib_last_segment"
+            android:id="@+id/ib_next_segment"
             android:layout_width="@dimen/shape_circle_width"
             android:layout_height="@dimen/shape_circle_width"
-            android:src="@drawable/exo_icon_previous"
+            android:src="@drawable/exo_icon_next"
             android:padding="2dp"
             android:background="@drawable/shape_circle_transparent"
             />

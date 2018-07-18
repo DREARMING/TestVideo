@@ -104,8 +104,12 @@ public class SegmentVideoComponent extends FrameLayout {
     }
 
     public void setAutoPlaySegment(boolean autoPlaySegment) {
-        if(this.autoPlaySegment != autoPlaySegment)
+        if(this.autoPlaySegment != autoPlaySegment) {
             this.autoPlaySegment = autoPlaySegment;
+            if(playController != null){
+                playController.setAutoPlay(autoPlaySegment);
+            }
+        }
     }
 
     public Player getPlayer(){
@@ -120,7 +124,7 @@ public class SegmentVideoComponent extends FrameLayout {
         this.segmentMills = config.getSegmentMills();
         this.segmentMode = config.isSegmentMode();
         this.repeatMode = config.isLoopSegment();
-        this.autoPlaySegment = config.isAutoPlaySegment();
+        setAutoPlaySegment(config.isAutoPlaySegment());
         this.showTitle = config.isShowTitle();
         prepardVideo(config.getVideoUrl());
     }
@@ -164,10 +168,6 @@ public class SegmentVideoComponent extends FrameLayout {
     }
 
     public void onBackPressed(){
-        if(player != null){
-            player.stop();
-            player.release();
-        }
         if(infoListener != null){
             infoListener.onBackPressed();
         }
@@ -196,6 +196,9 @@ public class SegmentVideoComponent extends FrameLayout {
         }
         //tvSegmentIndex.setText("当前片段序号：" + (segmentIndex+1));
         player.setPlayWhenReady(false);
+        if(playController != null){
+            playController.setPlayBtState(false);
+        }
         curSegmentIndex = segmentIndex;
         curSegment = segmentList.get(segmentIndex);
         player.seekTo(curSegment.getStartMs());
@@ -217,6 +220,7 @@ public class SegmentVideoComponent extends FrameLayout {
 
     private void initView(@NonNull Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         LayoutInflater.from(context).inflate(R.layout.view_segment_video, this);
+        setBackgroundColor(Color.BLACK);
         playerView = findViewById(R.id.playerView);
         tvError = playerView.findViewById(com.google.android.exoplayer2.ui.R.id.exo_error_message);
         tvError.setTextColor(Color.WHITE);
@@ -279,6 +283,7 @@ public class SegmentVideoComponent extends FrameLayout {
                     hasError = false;
                     playerView.setCustomErrorMessage(null);
                     tvError.setVisibility(INVISIBLE);
+                    player.setPlayWhenReady(autoPlaySegment);
                     if(playController != null) playController.setPlayBtState(autoPlaySegment);
                     return;
                 }
@@ -385,7 +390,6 @@ public class SegmentVideoComponent extends FrameLayout {
                 if(infoListener != null){
                     infoListener.onError(errMsg);
                 }
-                Toast.makeText(getContext(), "播放器不能此视频源", Toast.LENGTH_SHORT).show();
             } else if (error.getRendererException() != null) {
                 hasPrepared = false;
                 hasError = true;

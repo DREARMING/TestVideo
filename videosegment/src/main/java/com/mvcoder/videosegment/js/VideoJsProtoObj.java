@@ -1,5 +1,6 @@
 package com.mvcoder.videosegment.js;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.os.Looper;
@@ -69,6 +70,7 @@ public class VideoJsProtoObj implements IVideoJsProto {
         FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         videoContainer.setLayoutParams(params);
         overlay.addView(videoContainer);
+        videoContainer.setJsBridge(this);
     }
 
     public static VideoJsProtoObj getInstance(WebView context, FrameLayout overlay) {
@@ -110,7 +112,7 @@ public class VideoJsProtoObj implements IVideoJsProto {
     @Override
     public void clearVideo(String videoId) {
         mHandler.removeMessages(CLEAR_VIDEO);
-        mHandler.obtainMessage(CLEAR_VIDEO, videoId);
+        mHandler.obtainMessage(CLEAR_VIDEO, videoId).sendToTarget();
     }
 
     @Override
@@ -121,6 +123,10 @@ public class VideoJsProtoObj implements IVideoJsProto {
     public void onBackPressed(){
         if(webView.canGoBack()){
             webView.goBack();
+            return;
+        }
+        if(mContext instanceof Activity){
+            ((Activity) mContext).finish();
         }
     }
 
