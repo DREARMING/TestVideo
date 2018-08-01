@@ -4,6 +4,7 @@
 
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
 
     <application
         android:name=".TestVideoApplication"
@@ -19,16 +20,47 @@
         <activity
             android:name=".ExoPlayerActivity"
             android:hardwareAccelerated="true" />
-        <activity android:name=".VideoControllerActivity"></activity>
-        <activity android:name=".TestWebviewActivity">
+        <activity android:name=".VideoControllerActivity" />
+        <activity android:name=".TestWebviewActivity" />
+        <activity android:name=".TestBubbleSbActivity" />
+        <activity android:name=".ImageChooserActivity" />
+
+        <provider
+            android:name=".provider.BookContentProvider"
+            android:authorities="com.mvcoder.provider.BookContentProvider"
+            android:grantUriPermissions="true" />
+
+        <activity android:name=".RemoteServiceActivity" />
+        <activity android:name=".TestUriActivity" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.mvcoder.testvideo.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
+
+        <activity android:name=".ImagesActivity">
+
+            <intent-filter>
+                <action android:name="android.intent.action.PICK" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.OPENABLE" />
+
+                <data android:mimeType="image/*" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ConstrantLayoutTestActivity" />
+        <activity android:name=".ScrollActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".TestBubbleSbActivity">
-
         </activity>
     </application>
 
