@@ -54,13 +54,17 @@
                 <data android:mimeType="image/*" />
             </intent-filter>
         </activity>
-        <activity android:name=".ConstrantLayoutTestActivity" />
-        <activity android:name=".ScrollActivity">
+        <activity android:name=".ConstrantLayoutTestActivity"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity android:name=".ScrollActivity">
+
         </activity>
     </application>
 
