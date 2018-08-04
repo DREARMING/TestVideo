@@ -19,6 +19,8 @@ import com.blankj.utilcode.util.LogUtils;
 import com.blankj.utilcode.util.ToastUtils;
 import com.mvcoder.testvideo.fragment.MenuFragment;
 
+import java.lang.reflect.Method;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -96,6 +98,7 @@ public class ConstrantLayoutTestActivity extends AppCompatActivity implements Me
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         LogUtils.d("onCreateOptionsMenu");
+        setIconEnable(menu,true);
         if (showAllMenu) {
             getMenuInflater().inflate(R.menu.menu_test, menu);
             //更改名字
@@ -106,7 +109,6 @@ public class ConstrantLayoutTestActivity extends AppCompatActivity implements Me
             menu.removeItem(R.id.menu_scan);
             menu.removeItem(11);
         }
-
         MenuItem item = menu.findItem(R.id.menu_share);
         SearchView searchView = (SearchView) item.getActionView();
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -122,6 +124,17 @@ public class ConstrantLayoutTestActivity extends AppCompatActivity implements Me
             }
         });
         return super.onCreateOptionsMenu(menu);
+    }
+
+    private void setIconEnable(Menu menu, boolean enable) {
+        try {
+            Class<?> clazz = Class.forName("com.android.internal.view.menu.MenuBuilder");
+            Method m = clazz.getDeclaredMethod("setOptionalIconsVisible", boolean.class);
+            m.setAccessible(true);
+            m.invoke(menu, enable); 
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -150,9 +163,9 @@ public class ConstrantLayoutTestActivity extends AppCompatActivity implements Me
 
     private boolean isHide = true;
 
-    private void hideAndShowActionBar(){
+    private void hideAndShowActionBar() {
         ActionBar actionBar = getSupportActionBar();
-        if(isHide)
+        if (isHide)
             actionBar.hide();
         else
             actionBar.show();

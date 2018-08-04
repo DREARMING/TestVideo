@@ -37,6 +37,5 @@ dependencies {
     implementation project(':videosegment')
     implementation 'com.xw.repo:bubbleseekbar:3.16-lite'
     implementation 'com.android.support:support-v4:27.0.0'
-
-
+    implementation 'com.android.support:design:27.0.0'
 }

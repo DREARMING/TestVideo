@@ -44,7 +44,6 @@
         </provider>
 
         <activity android:name=".ImagesActivity">
-
             <intent-filter>
                 <action android:name="android.intent.action.PICK" />
 
@@ -54,17 +53,23 @@
                 <data android:mimeType="image/*" />
             </intent-filter>
         </activity>
-        <activity android:name=".ConstrantLayoutTestActivity"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            >
+        <activity
+            android:name=".ConstrantLayoutTestActivity"
+            android:theme="@style/MyTheme" />
+        <activity android:name=".ScrollActivity" />
+        <activity
+            android:name=".SystemUIActivity"
+            android:theme="@style/TempTheme"></activity>
+        <activity android:name=".clipdata.ClipActivity">
+
+        </activity>
+        <activity android:name=".coordinatorlayout.CoordinateLayoutActivity"
+            android:theme="@style/TempTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".ScrollActivity">
-
         </activity>
     </application>
 
