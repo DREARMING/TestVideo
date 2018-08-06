@@ -48,7 +48,7 @@ public class CoordinateLayoutActivity extends AppCompatActivity {
     }
 
     private void initView() {
-        collapsingToolbarLayout.setTitle("Title");
+       // collapsingToolbarLayout.setTitle("Title");
     }
 
     private void initToolbar() {
