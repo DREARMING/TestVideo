@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PointView">
+        <attr name="radius" format="dimension" />
+        <attr name="color" format="color" />
+        <attr name="raduisX" format="dimension" />
+        <attr name="raduisY" format="dimension" />
+    </declare-styleable>
+
+</resources>

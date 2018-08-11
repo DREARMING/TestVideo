@@ -60,21 +60,22 @@
         <activity
             android:name=".SystemUIActivity"
             android:theme="@style/TempTheme" />
-        <activity android:name=".clipdata.ClipActivity"></activity>
+        <activity android:name=".clipdata.ClipActivity" />
         <activity
             android:name=".coordinatorlayout.CoordinateLayoutActivity"
             android:theme="@style/TempTheme">
+
+        </activity>
+        <activity
+            android:name=".coordinatorlayout.ScrollingActivity"
+            android:label="@string/title_activity_scrolling"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".PropertyAnimationActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity
-            android:name=".coordinatorlayout.ScrollingActivity"
-            android:label="@string/title_activity_scrolling"
-            android:theme="@style/AppTheme.NoActionBar">
-
         </activity>
     </application>
 
